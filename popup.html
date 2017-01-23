@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by roXon (http://jsbin.com/boziyo/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <meta name="viewport" content="width=device-width">
+    <title>POPUP - jQuery - Demo by Roko CB</title>
+  <style id="jsbin-css">
+*{margin:0;box-sizing:border-box;}
+html,body{height:100%;font:14px/1.4 sans-serif;}
+
+
+
+.popup{
+  -webkit-backface-visibility: hidden;
+  position: fixed;
+  z-index:999;
+  top:50%;
+  left:50%;
+  transform:translate(-50.08%, -50.08%);
+  visibility:hidden;
+  opacity:0;
+  transition: 0.3s;
+}
+.popup.show{
+  visibility: visible;
+  opacity:1;
+}
+.popup + div{
+  cursor:pointer;
+  position:fixed;
+  z-index:998;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.3);
+  visibility:hidden;
+  opacity:0;
+  transition: 0.3s;
+}
+.popup.show + div{
+  visibility:visible;
+  opacity:1;
+  transition: 0.3s;
+}
+.popup .pop{
+  display:none;
+  position: relative;
+  max-height: calc(100vh - 64px);
+  flex-flow: column nowrap;
+  background:#fff;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+}
+.popup .pop.show{
+  display:flex;
+}
+.popup .cont{
+  position:relative;
+  overflow-y: auto;
+  min-width: 64px;
+}
+.popup .popupClose{
+  cursor:pointer;
+  position:absolute;
+  z-index:1;
+  top:8px;
+  right:8px;
+  width:32px;
+  height:32px;
+  line-height:32px;
+  text-align:center;
+  font-size:25px;
+  border-radius:50%;
+  opacity: 0.3;
+  transition: 0.3s;
+}
+.popup .popupClose:hover{
+  opacity:1;
+  background:#0bf;
+  color:#fff;
+}
+
+.popup .head,
+.popup .cont{
+  padding:16px 32px;
+}
+.popup .head{
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  padding-right:56px;
+}
+</style>
+</head>
+  <body>
+
+
+
+
+
+    <div class="popup">
+
+      <div class="popupClose">&times;</div>
+      
+      <div class="pop" id="popup1">
+        <div class="head">Header</div>
+        <div class="cont">Content1<p style="height:1000px;"></p></div>
+      </div>
+
+      <div class="pop" id="popup2">
+        <div class="head">HEADER</div>
+        <div class="cont">CONTENT2</div>
+      </div>
+
+    </div><div></div>
+
+
+
+
+    <a data-popup="#popup1">SHOW1</a><br>
+    <a data-popup="#popup2">SHOW2</a>
+
+
+
+  <script id="jsbin-javascript">
+function popup(data) {
+  
+  var sele = data && typeof data === "string" ? data : $(this).data("popup");
+  var $pop = $(sele);
+  var $popup = $pop.closest(".popup");
+  var $underlay = $popup.next("div");
+  var $close = $popup.find(".popupClose");
+
+  $popup.find(".pop").removeClass("show");
+  $pop.addClass("show");
+  $popup.addClass("show");
+
+  $underlay.add($close).one("click", function(evt) {
+    evt.preventDefault();
+    $popup.removeClass("show");
+  });
+}
+
+$("[data-popup]").on("click", popup);
+
+// Manually open popup
+// popup("#popup2");
+
+
+</script>
+</body>
+</html>
